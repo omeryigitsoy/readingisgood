@@ -23,7 +23,7 @@ public class BookService {
     }
 
     public void updateBookStock(Long id, Integer stockCount) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book not found"));
+        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
         book.setStockCount(stockCount);
         bookRepository.save(book);
     }

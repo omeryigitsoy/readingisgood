@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Repository
-@RequestMapping("/books")
+@RequestMapping("/book")
 @AllArgsConstructor
 public class BookController {
     private final BookService bookService;
