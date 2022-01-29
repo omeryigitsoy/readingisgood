@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8080
 
 spring:
   application:
@@ -13,6 +13,8 @@ spring:
           uri: lb://BOOK-SERVICE
           predicates:
             - Path=/book/**
+            - Header=Authorization, Bearer(.*)
+          filters: AuthorizationHeaderFilter
         - id: CUSTOMER-SERVICE
           uri: lb://CUSTOMER-SERVICE
           predicates:
@@ -21,6 +23,8 @@ spring:
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order/**
+            - Header=Authorization, Bearer(.*)
+          filters: AuthorizationHeaderFilter
 
 eureka:
   client:
