@@ -31,4 +31,13 @@ public class BookService {
     public List<BookDto> listAllBooks(){
         return bookRepository.findAll().stream().map(book -> mapper.map(book,BookDto.class)).collect(Collectors.toList());
     }
+
+    public Integer getStockCountById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
+        return book.getStockCount();
+    }
+    public BookDto getStockInfoById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
+        return mapper.map(book,BookDto.class);
+    }
 }
