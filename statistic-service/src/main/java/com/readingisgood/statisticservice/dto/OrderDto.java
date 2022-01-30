@@ -1,4 +1,4 @@
-package com.readingisgood.orderservice.dto;
+package com.readingisgood.statisticservice.dto;
 
 import lombok.Data;
 

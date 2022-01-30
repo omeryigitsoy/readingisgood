@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +36,24 @@ public class OrderController {
     }
 
     @GetMapping("/listOrdersByDate")
-    public ResponseEntity<List<OrderDto>> listOrdersByDate(@RequestParam Date startDate,@RequestParam Date endDate){
+    public ResponseEntity<List<OrderDto>> listOrdersByDate(@RequestParam LocalDateTime startDate,@RequestParam LocalDateTime endDate){
         return new ResponseEntity<>(orderService.listOrdersByDate(startDate,endDate),HttpStatus.OK);
     }
+
+    @GetMapping("/customerMonthlyOrders/{customerId}")
+    public ResponseEntity<List<OrderDto>> findAllOrdersByCustomerId(@PathVariable("customerId") Long customerId,
+                                                                 @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                 @RequestParam(defaultValue = "10") Integer pageSize){
+
+        return new ResponseEntity<>(orderService.findOrdersByCustomerId(customerId,pageNumber,pageSize),HttpStatus.OK);
+    }
+
+    @GetMapping("/listMonthlyOrderStatistics/{customerId}")
+    public ResponseEntity<List<OrderDto>> findAllOrdersByCustomerId(@PathVariable("customerId") Long customerId){
+        return new ResponseEntity<>(orderService.findAllOrdersByCustomerId(customerId),HttpStatus.OK);
+    }
+
+
+
 
 }

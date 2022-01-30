@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,5 @@ public class BookDto {
     @NotNull(message = "Author info cannot be empty")
     private String author;
     private Integer stockCount;
+    private BigDecimal price;
 }

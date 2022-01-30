@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -19,4 +20,5 @@ public class Book {
     private String name;
     private String author;
     private Integer stockCount;
+    private BigDecimal price;
 }

@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity(name = "order_table")
 @Data
@@ -23,5 +23,5 @@ public class Order {
     private Long bookId;
     private BigDecimal amount;
     private Integer count;
-    private Date date;
+    private LocalDateTime date;
 }

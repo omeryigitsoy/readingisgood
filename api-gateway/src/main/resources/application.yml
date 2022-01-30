@@ -25,6 +25,12 @@ spring:
             - Path=/order/**
             - Header=Authorization, Bearer(.*)
           filters: AuthorizationHeaderFilter
+        - id: STATISTIC-SERVICE
+          uri: lb://STATISTIC-SERVICE
+          predicates:
+            - Path=/statistic/**
+            - Header=Authorization, Bearer(.*)
+          filters: AuthorizationHeaderFilter
 
 eureka:
   client:

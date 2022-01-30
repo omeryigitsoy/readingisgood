@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class OrderService {
         if(bookDto.getStockCount() == 0){
             throw new StockNotFoundException("Sorry!! There is no available stock for this book");
         }
-        orderDto.setDate(new Date());
+        orderDto.setDate(LocalDateTime.now());
         Order order = orderRepository.save(mapper.map(orderDto,Order.class));
         String updateBookStock = bookProxy.updateBookStock(bookDto.getId(), bookDto.getStockCount() - 1);
         return mapper.map(order,OrderDto.class);
@@ -50,8 +51,13 @@ public class OrderService {
         return orderList.stream().map(order -> mapper.map(order,OrderDto.class)).collect(Collectors.toList());
     }
 
-    public List<OrderDto> listOrdersByDate(Date startDate, Date endDate) {
+    public List<OrderDto> listOrdersByDate(LocalDateTime startDate, LocalDateTime endDate) {
         List<Order> orderList = orderRepository.findAllByDateBetween(startDate,endDate);
+        return orderList.stream().map(order -> mapper.map(order,OrderDto.class)).collect(Collectors.toList());
+    }
+
+    public List<OrderDto> findAllOrdersByCustomerId(Long customerId) {
+        List<Order> orderList = orderRepository.findAllByCustomerId(customerId);
         return orderList.stream().map(order -> mapper.map(order,OrderDto.class)).collect(Collectors.toList());
     }
 }
