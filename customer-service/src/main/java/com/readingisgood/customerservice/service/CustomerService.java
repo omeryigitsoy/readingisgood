@@ -5,6 +5,7 @@ import com.readingisgood.customerservice.entity.Customer;
 import com.readingisgood.customerservice.exception.CustomerNotFoundException;
 import com.readingisgood.customerservice.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,14 +18,17 @@ import java.util.ArrayList;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CustomerService implements UserDetailsService {
     private final CustomerRepository customerRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper mapper;
 
     public CreateCustomerDto createCustomer(CreateCustomerDto createCustomerDto) {
+        log.info("Creating new customer with firstName {},lastName {} and email {} ", createCustomerDto.getFirstName(),createCustomerDto.getLastName(),createCustomerDto.getEmail());
         createCustomerDto.setPassword(bCryptPasswordEncoder.encode(createCustomerDto.getPassword()));
         Customer savedCustomer = customerRepository.save(mapper.map(createCustomerDto,Customer.class));
+        log.info("New customer created with firstName {},lastName {} and email {} ", createCustomerDto.getFirstName(),createCustomerDto.getLastName(),createCustomerDto.getEmail());
         return mapper.map(savedCustomer, CreateCustomerDto.class);
     }
 

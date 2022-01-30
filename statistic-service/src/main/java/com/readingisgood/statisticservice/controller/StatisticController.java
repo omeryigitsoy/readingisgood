@@ -1,7 +1,7 @@
 package com.readingisgood.statisticservice.controller;
 
 import com.readingisgood.statisticservice.dto.StatisticDto;
-import com.readingisgood.statisticservice.entity.StatisticService;
+import com.readingisgood.statisticservice.service.StatisticService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

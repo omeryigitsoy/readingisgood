@@ -1,0 +1,7 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: BOOK-SERVICE
+  config:
+    import: optional:configserver:http://localhost:8888

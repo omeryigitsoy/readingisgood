@@ -34,11 +34,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.listAllBooks());
     }
 
-    /*@GetMapping("/stock/{id}")
-    public ResponseEntity<Integer> getStockCountById(@PathVariable("id") Long id){
-        return ResponseEntity.ok(bookService.getStockCountById(id));
-    }*/
-
     @GetMapping("/stock/{id}")
     public ResponseEntity<BookDto> getStockInfoById(@PathVariable("id") Long id){
         return ResponseEntity.ok(bookService.getStockInfoById(id));

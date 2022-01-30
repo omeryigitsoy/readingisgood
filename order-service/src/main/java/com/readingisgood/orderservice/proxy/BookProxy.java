@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(name="BOOK-SERVICE")
 public interface BookProxy {
 
-    //@GetMapping("/book/stock/{id}")
-    //Integer getStockCountById(@PathVariable("id") Long id);
-
     @GetMapping("/book/stock/{id}")
     BookDto getStockInfoById(@PathVariable("id") Long id);
 
