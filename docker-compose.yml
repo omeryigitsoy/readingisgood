@@ -18,10 +18,43 @@ services:
     image: api-gateway:latest
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_URI: http://BOOK-SERVICE:8001
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_ID: BOOK-SERVICE
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[0]: Path= /book/**
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[1]: Header=Authorization, Bearer(.*)
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_FILTERS[0]: AuthorizationHeaderFilter
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_URI: http://CUSTOMER-SERVICE:8002
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_ID: CUSTOMER-SERVICE
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_PREDICATES[0]: Path= /customer/**
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_PREDICATES[1]: Header=Authorization, Bearer(.*)
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_FILTERS[0]: AuthorizationHeaderFilter
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_URI: http://ORDER-SERVICE:8003
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_ID: ORDER-SERVICE
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_PREDICATES[0]: Path= /order/**
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_PREDICATES[1]: Header=Authorization, Bearer(.*)
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_FILTERS[0]: AuthorizationHeaderFilter
+      SPRING_CLOUD_GATEWAY_ROUTES[3]_URI: http://ORDER-SERVICE:8004
+      SPRING_CLOUD_GATEWAY_ROUTES[3]_ID: STATISTIC-SERVICE
+      SPRING_CLOUD_GATEWAY_ROUTES[3]_PREDICATES[0]: Path= /statistic/**
+      SPRING_CLOUD_GATEWAY_ROUTES[3]_PREDICATES[1]: Header=Authorization, Bearer(.*)
+      SPRING_CLOUD_GATEWAY_ROUTES[3]_FILTERS[0]: AuthorizationHeaderFilter
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+    ports:
+      - "8080:8080"
+    depends_on:
+      - config-server
+    networks:
+      - reading-is-good-network
+  config-server:
+    container_name: config-server
+    build:
+      context: config-server
+      dockerfile: Dockerfile
+    image: config-server:latest
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     ports:
       - "8888:8888"
-    depends_on:
-      - eureka-server
     networks:
       - reading-is-good-network
   book-service:
@@ -32,8 +65,11 @@ services:
     image: book-service:latest
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
     ports:
       - "8001:8001"
+    depends_on:
+      - config-server
     networks:
       - reading-is-good-network
   customer-service:
@@ -44,8 +80,11 @@ services:
     image: customer-service:latest
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
     ports:
       - "8002:8002"
+    depends_on:
+      - config-server
     networks:
       - reading-is-good-network
   order-service:
@@ -56,10 +95,29 @@ services:
     image: order-service:latest
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
     ports:
       - "8003:8003"
+    depends_on:
+      - config-server
     networks:
       - reading-is-good-network
+  statistic-service:
+    container_name: statistic-service
+    build:
+      context: statistic-service
+      dockerfile: Dockerfile
+    image: statistic-service:latest
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+    ports:
+      - "8004:8004"
+    depends_on:
+      - config-server
+    networks:
+      - reading-is-good-network
+
 networks:
   reading-is-good-network:
     driver: bridge
