@@ -68,7 +68,7 @@ After successfull login server returns token information for accessing secured s
 You need to send this Bearer token as a header while making request to other services.
 
 <h4>Add new book to system:<h4>
-Post Request:
+Post Request:localhost:8080/book<br>
 {
 "name":"Book1",
 "author":"Author 1",
@@ -101,7 +101,7 @@ You can retrieve monthly statistics using below url:<br>
 GET Request http://localhost:8080/statistic/customerId
 
 Also you can find swagger documentation of each microservice below:
-http://localhost:8001/swagger-ui/index.html
-http://localhost:8002/swagger-ui/index.html
-http://localhost:8003/swagger-ui/index.html
-http://localhost:8004/swagger-ui/index.html
+http://localhost:8001/swagger-ui/index.html<br>
+http://localhost:8002/swagger-ui/index.html<br>
+http://localhost:8003/swagger-ui/index.html<br>
+http://localhost:8004/swagger-ui/index.html<br>
