@@ -98,9 +98,9 @@ localhost:8080/order/
 }
 
 You can retrieve monthly statistics using below url:<br>
-GET Request http://localhost:8080/statistic/customerId
+GET Request http://localhost:8080/statistic/customerId<br>
 
-Also you can find swagger documentation of each microservice below:
+Also you can find swagger documentation of each microservice below:<br>
 http://localhost:8001/swagger-ui/index.html<br>
 http://localhost:8002/swagger-ui/index.html<br>
 http://localhost:8003/swagger-ui/index.html<br>
