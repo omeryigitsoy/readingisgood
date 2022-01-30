@@ -3,3 +3,9 @@ INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book2','Author2',10,20
 INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book3','Author3',15,30);
 INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book4','Author4',20,40);
 INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book5','Author5',25,50);
+INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book6','Author6',11,54);
+INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book7','Author7',12,86);
+INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book8','Author8',13,66);
+INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book9','Author9',23,73);
+INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book10','Author10',27,88);
+INSERT INTO BOOK (name,author,stock_count,price) VALUES ('Book11','Author11',55,92);
