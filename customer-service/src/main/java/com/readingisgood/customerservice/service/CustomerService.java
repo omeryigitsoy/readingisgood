@@ -1,8 +1,10 @@
 package com.readingisgood.customerservice.service;
 
 import com.readingisgood.customerservice.dto.CreateCustomerDto;
+import com.readingisgood.customerservice.dto.OrderDto;
 import com.readingisgood.customerservice.entity.Customer;
 import com.readingisgood.customerservice.exception.CustomerNotFoundException;
+import com.readingisgood.customerservice.proxy.OrderProxy;
 import com.readingisgood.customerservice.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +26,7 @@ public class CustomerService implements UserDetailsService {
     private final CustomerRepository customerRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ModelMapper mapper;
+    private final OrderProxy orderProxy;
 
     public CreateCustomerDto createCustomer(CreateCustomerDto createCustomerDto) {
         log.info("Creating new customer with firstName {},lastName {} and email {} ", createCustomerDto.getFirstName(),createCustomerDto.getLastName(),createCustomerDto.getEmail());
@@ -48,5 +52,10 @@ public class CustomerService implements UserDetailsService {
         }
         return mapper.map(customer,CreateCustomerDto.class);
 
+    }
+
+    public List<OrderDto> findAllOrdersByCustomerId(Long customerId, Integer pageNumber, Integer pageSize){
+        List<OrderDto> allOrdersByCustomerId = orderProxy.findAllOrdersByCustomerId(customerId, pageNumber, pageSize);
+        return allOrdersByCustomerId;
     }
 }
