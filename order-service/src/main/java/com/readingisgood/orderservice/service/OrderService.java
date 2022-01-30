@@ -33,7 +33,7 @@ public class OrderService {
     public OrderDto newOrder(OrderDto orderDto) {
         log.info("Calling book-service service for getting stock info of book");
         BookDto bookDto = bookProxy.getStockInfoById(orderDto.getBookId());
-        if(bookDto.getStockCount() == 0){
+        if(null == bookDto || bookDto.getStockCount() == 0){
             log.error("Sorry!! There is no available stock for this book");
             throw new StockNotFoundException("Sorry!! There is no available stock for this book");
         }
